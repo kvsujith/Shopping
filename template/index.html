@@ -1,0 +1,309 @@
+{% load static %}
+
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+
+<title>Welcome to Shopping</title>
+<link rel="icon" href="{% static 'images/shopping-icon.png' %}" type="image/gif" sizes="16x16">
+
+<link rel="stylesheet" type="text/css" href="{% static 'css/style.css '%}">
+
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+
+<body>
+<header class="header" >
+
+<nav class="navbar navbar-expand-lg  ">
+ <h2 class="p-1 text-primary" ><strong>E-Shopping..</strong>
+	</h2>
+  <a class="navbar-brand text-primary " href="#"></a>
+  <button class="navbar-toggler  " type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+   
+    <span class="navbar-toggler-icon  "></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+   
+
+      <ul class="navbar-nav mr-auto ">
+      <li class="nav-item active ml-4">
+        <a class="nav-link text-primary bg-transparent " href="/"><h5> <strong>Home</strong></h5> <span class="sr-only">(current)</span></a>
+      </li>
+      
+           <li class="nav-item active  ml-4">
+        <a class="nav-link text-primary bg-transparent" href="#products"><h5><strong>Products</strong></h5> <span class="sr-only">(current)</span></a>
+      </li>
+      
+           <li class="nav-item active  ml-4">
+        <a class="nav-link text-primary bg-transparent" href="#offerszone"><h5><strong>OfferZone</strong></h5> <span class="sr-only">(current)</span></a>
+      </li>
+
+          {% if user.is_superuser %}
+          <li class="nav-item active  ml-4">
+        <a class="nav-link text-primary bg-transparent" href="/admin" target="_blank"><h5><strong>Admin</strong></h5> <span class="sr-only ">(current)</span></a>
+      </li>
+          {% endif%}
+
+         
+         
+
+	
+      
+      
+    </ul>
+    
+    
+    
+    
+    <ul class="navbar-nav ml-auto ">
+      <li class="nav-item active mr-5">
+		  <a class="nav-link text-primary bg-transparent" href="/cartPage" ><h3><i class="fas fa-cart-arrow-down"></i></h3> <span class="sr-only bg-primary">(current)</span></a>
+      </li>
+
+        {% if user.is_authenticated %}
+
+        <li class="nav-item active">
+            <a class="nav-link text-primary bg-transparent mr-auto" href="#"><b>Hello, {{user.first_name}} </b></a>
+
+      </li>
+        <li class="nav-item active ">
+
+</li>
+        {% else %}
+           <li class="nav-item active">
+        <a class="nav-link text-primary bg-transparent mr-auto" href="{% url 'accounts:login' %}"><h3><i class="fas fa-user-circle"></i></h3> <span class="sr-only bg-primary">(current)</span></a>
+      </li>
+             {% endif%}
+
+
+    </ul>
+   
+  </div>
+</nav>
+    {% if messages %}
+<div class="alert  alert-primary" role="alert">
+
+    {% for i in messages %}
+    {{i}}
+    {% endfor %}
+</div>
+    {% endif %}
+
+	</header>
+
+
+
+<div id="demo" class="carousel slide" data-ride="carousel">
+
+  <!-- Indicators -->
+  <ul class="carousel-indicators">
+    <li data-target="#demo" data-slide-to="0" class="active"></li>
+    <li data-target="#demo" data-slide-to="1"></li>
+    <li data-target="#demo" data-slide-to="2"></li>
+  </ul>
+
+  <!-- The slideshow -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'images/vege.jpg' %}" width="100%"  alt="Los Angeles">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'images/vege.jpg' %}" width="100%" alt="Chicago">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'images/vege.jpg' %}" width="100%" alt="New York">
+    </div>
+  </div>
+
+  <!-- Left and right controls -->
+  <a class="carousel-control-prev" href="#demo" data-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </a>
+  <a class="carousel-control-next" href="#demo" data-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </a>
+
+</div>
+
+<div class="container-fluid" id="offerszone">
+<section class="bg-light">
+
+	<div class="container-fluid bg-transparent col-12 " >
+	
+        <div><hr/><h3 class="ml-4 text-white bg-primary rounded"><b class="pl-3">Offer Zone</b></h3></div>
+
+		<div class="row" >
+            {% for i in offerszone %}
+
+
+            {% if i.prdoffer%}
+            <div class="  ml-5 mt-2 mb-2 bg-white ">
+<div class="card-body ">
+<img src="{{i.prdimage.url}}" height="160" width="210" class="">
+
+
+    <h5 class="card-title text-primary text-center pt-2 "><b>{{i.prdname}}</b> </h5>
+
+  <p class="card-text "><s>Rs {{i.prdprice}} </s> &nbsp; &nbsp; <b class="text-success" >{{i.prdofferprice}} Rs per  {{i.prditemstypes}} </b> </p>
+
+    <a href="cart/{{i.id}}" style="width:100%;" class="btn btn-primary">Cart</a>
+
+	</div>
+
+
+	</div>
+
+            {% endif%}
+            {% endfor %}
+
+
+		</div>
+	</div>
+
+</section>
+    
+	</div>
+	
+	
+<div class="container-fluid">
+<section class="bg-white">
+
+	<div class="container-fluid">
+
+        <div class="space"></div>
+	
+        <div><hr/><h3 class="ml-4 text-white bg-primary"><b class="pl-3">Product Cateogories</b></h3></div>
+	
+		<div class="row" id="products">
+			
+		
+			
+
+
+
+           <div class="cards m-4">
+               <a href="{% url 'shop:products' 'Vege' %}">
+<div class="card-body card">
+<img src="{% static 'images/vege.jpg' %}" height="150" width="200">
+<h5 class="card-title text-primary"><b class="btn btn-primary">Vegetables</b> </h5>
+
+
+	</div>
+               </a>
+
+
+	</div>
+
+
+            <div class="cards m-4">
+                 <a href="{% url 'shop:products' 'Frui' %}">
+<div class="card-body card">
+<img src="{% static 'images/FRUITS-AND-VEGETABLES.jpg' %}"  height="250" width="200">
+<h5 class="card-title text-primary"><b class="btn btn-primary">Fruits</b> </h5>
+
+
+	</div>
+                     </a>
+
+
+	</div>
+
+            <div class="cards m-4">
+                 <a href="{% url 'shop:products' 'Gro' %}">
+<div class="card-body card">
+<img src="{% static 'images/gro.jpg' %}" height="150" width="200">
+<h5 class="card-title text-primary"><b class="btn btn-primary">Grocery</b> </h5>
+
+
+	</div>
+                     </a>
+
+
+	</div>
+
+            <div class="cards m-4">
+                 <a href="{% url 'shop:products' 'Sta' %}">
+<div class="card-body card">
+<img src="{% static 'images/pc.jpg' %}" height="150" width="200">
+<h5 class="card-title text-primary"><b class="btn btn-primary">Personal care</b> </h5>
+	</div>
+  </a>
+	</div>
+
+
+
+		</div>
+		
+		
+		
+	</div>
+
+</section>
+	</div>
+	
+	
+
+
+
+<footer class="page-footer font-small white pt-4 " >
+
+  <div class="footer-copyright text-center py-0 bg-primary text-white">© 2020 Copyright:
+    <a href="https://github.com/kvsujith" target="_blank" class="text-white"> kvsujith</a>
+  </div>
+
+
+</footer>
+
+</body>
+
+<style>
+	/* width */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar:hover {
+  width: 8px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  box-shadow: outset 0 0 0px grey;
+  border-radius: 5px;
+  outline:none;
+
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: white;
+  border-radius: 5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+</style>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.3.2/css/mdb.min.css">
+
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+
+
+
+
+
+</html>
